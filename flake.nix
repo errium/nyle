@@ -1,7 +1,7 @@
 {
   description = "nyle";
 
-  outputs = {self, ...} @ inputs: {
+  outputs = {self, ...}: {
     hjemModules = {
       nyle = ./module;
       default = self.hjemModules.nyle;
