@@ -9,8 +9,8 @@
     ../targets
   ];
 
-  options = {
-    nyle.enable = lib.mkEnableOption "nyle";
+  options.nyle = {
+    enable = lib.mkEnableOption "nyle";
   };
 
   config = {

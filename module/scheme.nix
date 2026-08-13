@@ -30,7 +30,10 @@ in {
     type = lib.types.submodule {
       options = {
         variant = lib.mkOption {
-          type = lib.types.enum ["dark" "light"];
+          type = lib.types.enum [
+            "dark"
+            "light"
+          ];
           # TODO: better description
           description = "Scheme variant. Dark means base00 is darkest, light means base00 is lightest.";
         };
