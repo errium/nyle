@@ -1,3 +1,3 @@
 {lib, ...}: {
-  imports = lib.filesystem.listFilesRecursive ./.;
+  # imports = lib.filesystem.listFilesRecursive ./.;
 }
