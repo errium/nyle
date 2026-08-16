@@ -1,4 +1,4 @@
-{mkTarget}:
+{mkTarget, ...}:
 mkTarget {
   name = "foot";
 
@@ -28,8 +28,5 @@ mkTarget {
 
       16=${base09}
       17=${base0F}
-
-      [main]
-      initial-color-theme=${variant}
     '';
 }
