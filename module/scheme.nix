@@ -1,7 +1,5 @@
 {lib, ...}: let
-  hex = lib.mkOption {
-    type = lib.types.strMatching "^#[0-9a-fA-F]{6}$";
-  };
+  hex = lib.mkOption {type = lib.types.strMatching "^#[0-9a-fA-F]{6}$";};
 in {
   options.nyle.scheme = lib.mkOption {
     description = "WIP";

@@ -1,9 +1,10 @@
 {lib, ...}: {
-  imports = [
-    ./scheme.nix
-  ];
+  imports =
+    [
+      ./mk-target.nix
+      ./scheme.nix
+    ]
+    ++ lib.filesystem.listFilesRecursive ../targets;
 
-  options.nyle = {
-    enable = lib.mkEnableOption "nyle";
-  };
+  options.nyle.enable = lib.mkEnableOption "nyle";
 }
