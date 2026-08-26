@@ -5,6 +5,11 @@ in {
     description = "WIP";
     type = lib.types.submodule {
       options = {
+        variant = lib.mkOption {
+          description = "WIP";
+          type = lib.types.enum ["dark" "light"];
+        };
+
         base00 = hex;
         base01 = hex;
         base02 = hex;
@@ -29,11 +34,6 @@ in {
         base15 = hex;
         base16 = hex;
         base17 = hex;
-
-        variant = lib.mkOption {
-          description = "WIP";
-          type = lib.types.enum ["dark" "light"];
-        };
       };
     };
   };

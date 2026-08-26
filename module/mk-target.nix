@@ -29,7 +29,7 @@
         };
       };
 
-    config = lib.mkIf cfg.enable {
+    config = lib.mkIf (config.nyle.enable && cfg.enable) {
       nyle.targets.${name}.generated = pkgs.writeText name (generate {
         inherit (config.nyle) scheme;
       });
