@@ -1,42 +1,32 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+let
   mkTarget = {
     name,
-    generate,
-    linkPath ? null,
+    template,
+  }: {
+    config,
+    lib,
+    ...
   }: let
-    cfg = config.nyle.targets.${name};
+    cfg = config.nyle;
   in {
-    options.nyle.targets.${name} =
-      {
-        enable = lib.mkEnableOption "theme generation for ${name}";
+    options.nyle.targets.${name} = {
+      enable = lib.mkEnableOption "${name} target";
 
-        generated = lib.mkOption {
-          type = lib.types.path;
-          readOnly = true;
-          description = "Store path of the generated ${name} theme.";
-        };
-      }
-      // lib.optionalAttrs (linkPath != null) {
-        link = lib.mkOption {
-          type = lib.types.bool;
-          description = "Whether to link the theme into ${linkPath}.";
-          default = false;
-        };
-      };
-
-    config = lib.mkIf (config.nyle.enable && cfg.enable) {
-      nyle.targets.${name}.generated = pkgs.writeText name (generate {
-        inherit (config.nyle) scheme;
-      });
-
-      files = lib.mkIf (linkPath != null && cfg.link) {
-        ${linkPath}.source = cfg.generated;
+      generated = lib.mkOption {
+        type = lib.types.str;
+        description = "Generated configuration for the ${name} target.";
+        readOnly = true;
       };
     };
+
+    config.nyle.targets.${name} = lib.mkMerge [
+      (lib.mkIf (cfg.targetActivation == "all") {enable = lib.mkForce true;})
+      {
+        generated =
+          if cfg.targetActivation == "manual" && !cfg.targets.${name}.enable
+          then throw ''nyle: "${name}" target is not enabled.''
+          else template cfg.colors; # WARN
+      }
+    ];
   };
-}
+in {_module.args.nyleTarget = mkTarget;}
