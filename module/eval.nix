@@ -51,8 +51,16 @@
       nyleConfig
     ];
   };
-in {
-  check =
+
+  forced =
     builtins.deepSeq evaluation.config.nyle
     (builtins.deepSeq evaluation.config.lib.nyle true);
+in {
+  check = pkgs.runCommand "nyle-eval-check" {} ''
+    ${
+      if forced
+      then "echo ok"
+      else "exit 1"
+    } > $out
+  '';
 }

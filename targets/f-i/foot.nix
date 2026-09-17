@@ -1,6 +1,4 @@
-# TODO: Naming?
-{mkTarget, ...}:
-mkTarget {
+{
   name = "foot";
 
   template = scheme:

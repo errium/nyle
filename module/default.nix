@@ -1,11 +1,14 @@
-{lib, ...}: {
+{lib, ...}: let
+  mkTarget = import ./mk-target.nix;
+  targetFiles = lib.filesystem.listFilesRecursive ../targets;
+  targets = map (path: mkTarget (import path)) targetFiles;
+in {
   imports =
     [
-      ./lib.nix
-      ./mk-target.nix
-      ./options.nix
-
       ./scheme
+
+      ./lib.nix
+      ./options.nix
     ]
-    ++ lib.filesystem.listFilesRecursive ../targets;
+    ++ targets;
 }

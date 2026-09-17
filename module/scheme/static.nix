@@ -18,7 +18,7 @@
   colorsOnly = removeAttrs resolved ["variant"];
 
   base16Options = {
-    variant = mkOption {type = types.enum ["light" "dark"];};
+    variant = mkOption {type = types.enum ["light" "dark"];}; # TODO: Assertion
     base00 = mkOption {type = hex;};
     base01 = mkOption {type = hex;};
     base02 = mkOption {type = hex;};
