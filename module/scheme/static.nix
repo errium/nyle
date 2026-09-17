@@ -81,8 +81,8 @@ in {
   config = mkIf (cfg.enable && (hasBase16 || hasBase24)) {
     lib.nyle.colors = {
       variant = resolved.variant;
-      raw = colorsOnly;
       hex = lib.mapAttrs (_: v: "#" + v) colorsOnly;
+      raw = colorsOnly;
     };
   };
 }
