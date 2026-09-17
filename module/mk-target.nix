@@ -31,4 +31,7 @@ let
       }
     ];
   };
-in {_module.args.nyleTarget = mkTarget;}
+in {
+  # TODO: Rename??
+  _module.args.mkTarget = mkTarget;
+}

@@ -1,11 +1,11 @@
-# TODO: Update, naming
+# TODO: Naming?
 {mkTarget, ...}:
 mkTarget {
   name = "foot";
 
-  template = {scheme}:
-    with scheme; ''
-      [colors-${variant}]
+  template = scheme:
+    with scheme.raw; ''
+      [colors-${scheme.variant}]
       foreground=${base05}
       background=${base00}
 
