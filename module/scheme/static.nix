@@ -6,38 +6,51 @@
   inherit (lib) mkIf mkOption types;
   cfg = config.nyle;
 
+  # TODO: Style
+  # Utility vars
+  hex = types.strMatching "^[0-9A-Fa-f]{6}$";
+  hasBase16 = cfg.scheme.base16 != null;
+  hasBase24 = cfg.scheme.base24 != null;
+  resolved =
+    if hasBase24
+    then cfg.scheme.base24
+    else base16ToBase24 cfg.scheme.base16;
+  colorsOnly = removeAttrs resolved ["variant"];
+
   base16Options = {
-    base00 = mkOption {type = types.str;};
-    base01 = mkOption {type = types.str;};
-    base02 = mkOption {type = types.str;};
-    base03 = mkOption {type = types.str;};
-    base04 = mkOption {type = types.str;};
-    base05 = mkOption {type = types.str;};
-    base06 = mkOption {type = types.str;};
-    base07 = mkOption {type = types.str;};
-    base08 = mkOption {type = types.str;};
-    base09 = mkOption {type = types.str;};
-    base0A = mkOption {type = types.str;};
-    base0B = mkOption {type = types.str;};
-    base0C = mkOption {type = types.str;};
-    base0D = mkOption {type = types.str;};
-    base0E = mkOption {type = types.str;};
-    base0F = mkOption {type = types.str;};
+    variant = mkOption {type = types.enum ["light" "dark"];};
+    base00 = mkOption {type = hex;};
+    base01 = mkOption {type = hex;};
+    base02 = mkOption {type = hex;};
+    base03 = mkOption {type = hex;};
+    base04 = mkOption {type = hex;};
+    base05 = mkOption {type = hex;};
+    base06 = mkOption {type = hex;};
+    base07 = mkOption {type = hex;};
+    base08 = mkOption {type = hex;};
+    base09 = mkOption {type = hex;};
+    base0A = mkOption {type = hex;};
+    base0B = mkOption {type = hex;};
+    base0C = mkOption {type = hex;};
+    base0D = mkOption {type = hex;};
+    base0E = mkOption {type = hex;};
+    base0F = mkOption {type = hex;};
   };
 
   base24Options =
     base16Options
     // {
-      base10 = mkOption {type = types.str;};
-      base11 = mkOption {type = types.str;};
-      base12 = mkOption {type = types.str;};
-      base13 = mkOption {type = types.str;};
-      base14 = mkOption {type = types.str;};
-      base15 = mkOption {type = types.str;};
-      base16 = mkOption {type = types.str;};
-      base17 = mkOption {type = types.str;};
+      base10 = mkOption {type = hex;};
+      base11 = mkOption {type = hex;};
+      base12 = mkOption {type = hex;};
+      base13 = mkOption {type = hex;};
+      base14 = mkOption {type = hex;};
+      base15 = mkOption {type = hex;};
+      base16 = mkOption {type = hex;};
+      base17 = mkOption {type = hex;};
     };
 
+  # TODO: Naming (?)
   base16ToBase24 = colors:
     colors
     // {
@@ -65,11 +78,11 @@ in {
     };
   };
 
-  config = mkIf (cfg.scheme.base16 != null || cfg.scheme.base24 != null) {
-    # FIX: Naming
-    nyle.colors =
-      if cfg.scheme.base24 != null
-      then cfg.scheme.base24
-      else base16ToBase24 cfg.scheme.base16;
+  config = mkIf (cfg.enable && (hasBase16 || hasBase24)) {
+    lib.nyle.colors = {
+      variant = resolved.variant;
+      raw = colorsOnly;
+      hex = lib.mapAttrs (_: v: "#" + v) colorsOnly;
+    };
   };
 }

@@ -1,10 +1,13 @@
-{
+{lib, ...}: {
   imports = [
+    ./assertion.nix
     ./lib.nix
-    ./mk-target.nix # WARN
+    ./mk-target.nix
     ./options.nix
-    ./scheme/dynamic.nix
-    ./scheme/static.nix
     ./semantic.nix
+
+    ./scheme
+
+    (lib.filesystem.listFilesRecursive ../targets)
   ];
 }

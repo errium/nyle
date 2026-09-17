@@ -1,30 +1,34 @@
+# TODO: Format
 {
   config,
   lib,
   ...
 }: let
+  inherit (lib) mkIf mkOption types;
   cfg = config.nyle;
 
   dynamicOptions = {
-    image = lib.mkOption {
-      type = lib.types.path;
+    image = mkOption {
+      type = types.path;
       description = "Source image to generate a color scheme from.";
     };
 
-    scheme = lib.mkOption {
-      type = lib.types.str;
+    scheme = mkOption {
+      type = types.str;
       default = "mTonalSpot";
       description = "Matugen scheme variant to use.";
     };
   };
+
+  hasDynamic = cfg.scheme.dynamic != null;
 in {
-  options.nyle.scheme.dynamic = lib.mkOption {
-    type = lib.types.nullOr (lib.types.submodule {options = dynamicOptions;});
+  options.nyle.scheme.dynamic = mkOption {
+    type = types.nullOr (types.submodule {options = dynamicOptions;});
     default = null;
     description = "Generate a color scheme from an image using matugen.";
   };
 
-  config = lib.mkIf (cfg.scheme.dynamic != null) {
-    nyle.colors = throw "nyle: dynamic scheme generation is not implemented yet.";
+  config = mkIf (cfg.enable && hasDynamic) {
+    lib.nyle.colors = throw "nyle: dynamic scheme generation is not implemented yet.";
   };
 }

@@ -20,12 +20,14 @@ let
     };
 
     config.nyle.targets.${name} = lib.mkMerge [
-      (lib.mkIf (cfg.targetActivation == "all") {enable = lib.mkForce true;})
+      (lib.mkIf (cfg.enable && cfg.mode == "all") {enable = lib.mkForce true;})
       {
         generated =
-          if cfg.targetActivation == "manual" && !cfg.targets.${name}.enable
+          if !cfg.enable
+          then throw "nyle: nyle.enable is false."
+          else if cfg.mode == "manual" && !cfg.targets.${name}.enable
           then throw ''nyle: "${name}" target is not enabled.''
-          else template cfg.colors; # WARN
+          else template config.lib.nyle.colors; # WARN: lib.nyle.colors
       }
     ];
   };
