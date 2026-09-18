@@ -18,7 +18,7 @@ in {
     };
   };
 
-  # TODO: Clean up
+  # TODO: Clean up, move generated to lib
   config.nyle.targets.${name} = lib.mkMerge [
     (lib.mkIf (cfg.enable && cfg.mode == "all") {enable = lib.mkForce true;})
     {
