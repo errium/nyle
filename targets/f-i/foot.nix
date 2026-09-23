@@ -2,7 +2,7 @@
   name = "foot";
 
   template = scheme:
-    with scheme.raw; ''
+    with scheme.base.raw; ''
       [colors-${scheme.variant}]
       foreground=${base05}
       background=${base00}

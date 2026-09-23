@@ -1,3 +1,4 @@
+# TODO: Rewrite
 {
   config,
   lib,
@@ -5,16 +6,15 @@
 }: let
   inherit (lib) mkIf mkOption types;
   cfg = config.nyle;
+  colorsLib = import ../../lib/colors.nix {inherit lib;};
 
-  # TODO: Style
-  # Utility vars
   hex = types.strMatching "^[0-9A-Fa-f]{6}$";
   hasBase16 = cfg.scheme.base16 != null;
   hasBase24 = cfg.scheme.base24 != null;
   resolved =
     if hasBase24
     then cfg.scheme.base24
-    else base16ToBase24 cfg.scheme.base16;
+    else colorsLib.base16ToBase24 cfg.scheme.base16;
   colorsOnly = removeAttrs resolved ["variant"];
 
   base16Options = {
@@ -50,19 +50,8 @@
       base17 = mkOption {type = hex;};
     };
 
-  # TODO: Naming (?)
-  base16ToBase24 = colors:
-    colors
-    // {
-      base10 = colors.base00;
-      base11 = colors.base01;
-      base12 = colors.base02;
-      base13 = colors.base03;
-      base14 = colors.base0A;
-      base15 = colors.base0B;
-      base16 = colors.base0C;
-      base17 = colors.base0D;
-    };
+  mnemonicRaw = colorsLib.toMnemonic colorsOnly;
+  semanticRaw = colorsLib.toSemantic mnemonicRaw;
 in {
   options.nyle.scheme = {
     base16 = mkOption {
@@ -79,10 +68,26 @@ in {
   };
 
   config = mkIf (cfg.enable && (hasBase16 || hasBase24)) {
-    lib.nyle.colors = {
-      variant = resolved.variant;
-      hex = lib.mapAttrs (_: v: "#" + v) colorsOnly;
-      raw = colorsOnly;
+    lib.nyle = {
+      variant = resolved.variant; # TODO: Revisit placement
+
+      base = {
+        raw = colorsOnly;
+        hex = colorsLib.toHex colorsOnly;
+        rgb = colorsLib.toRgb colorsOnly;
+      };
+
+      mnemonic = {
+        raw = mnemonicRaw;
+        hex = colorsLib.toHex mnemonicRaw;
+        rgb = colorsLib.toRgb mnemonicRaw;
+      };
+
+      semantic = {
+        raw = semanticRaw;
+        hex = colorsLib.toHex semanticRaw;
+        rgb = colorsLib.toRgb semanticRaw;
+      };
     };
   };
 }
