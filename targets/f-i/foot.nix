@@ -2,30 +2,30 @@
   name = "foot";
 
   template = scheme:
-    with scheme.base.raw; ''
+    with scheme.mnemonic.raw; ''
       [colors-${scheme.variant}]
-      foreground=${base05}
-      background=${base00}
+      foreground=${scheme.base.raw.base05}
+      background=${scheme.base.raw.base00}
 
-      regular0=${base00}
-      regular1=${base08}
-      regular2=${base0B}
-      regular3=${base0A}
-      regular4=${base0D}
-      regular5=${base0E}
-      regular6=${base0C}
-      regular7=${base05}
+      regular0=${scheme.base.raw.base00}
+      regular1=${red}
+      regular2=${green}
+      regular3=${yellow}
+      regular4=${blue}
+      regular5=${magenta}
+      regular6=${cyan}
+      regular7=${scheme.base.raw.base05}
 
-      bright0=${base10}
-      bright1=${base12}
-      bright2=${base14}
-      bright3=${base13}
-      bright4=${base16}
-      bright5=${base17}
-      bright6=${base15}
-      bright7=${base07}
+      bright0=${scheme.base.raw.base10}
+      bright1=${brightRed}
+      bright2=${brightGreen}
+      bright3=${brightYellow}
+      bright4=${brightBlue}
+      bright5=${brightMagenta}
+      bright6=${brightCyan}
+      bright7=${scheme.base.raw.base07}
 
-      16=${base09}
-      17=${base0F}
+      16=${orange}
+      17=${brown}
     '';
 }

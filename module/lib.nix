@@ -1,4 +1,4 @@
-# TODO: Rewrite, simplify
+# FIXME
 {lib, ...}: {
   options.lib.nyle = lib.mkOption {
     type = lib.types.submodule {
