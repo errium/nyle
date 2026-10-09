@@ -4,7 +4,7 @@
   self,
 }: let
   inherit (pkgs) lib;
-  hjem-lib = import (hjem + "/lib.nix") {inherit lib pkgs;};
+  hjemLib = import (hjem + "/lib.nix") {inherit lib pkgs;};
 
   # https://github.com/tinted-theming/schemes/blob/spec-0.11/base16/monokai.yaml
   scheme = {
@@ -30,7 +30,7 @@
   # Evaluate nyle with all targets enabled.
   evaluation = lib.evalModules {
     class = "hjem";
-    specialArgs = {inherit hjem-lib pkgs;};
+    specialArgs = {inherit hjemLib pkgs;};
     modules = [
       (hjem + "/modules/common/user.nix")
       {

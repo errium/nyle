@@ -59,7 +59,8 @@ in {
   };
 
   config = mkIf (cfg.enable && (hasBase16 || hasBase24)) {
-    nyle._schemeNormalized =
+    # NOTE: `_schemeResolved` is declared in resolved.nix
+    nyle._schemeResolved =
       if hasBase24
       then cfg.scheme.base24
       else conversions.base16ToBase24 cfg.scheme.base16;

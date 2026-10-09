@@ -1,37 +1,36 @@
 _: {
-  # TODO: Revisit, change `s` naming (?)
   # https://github.com/tinted-theming/base24/blob/master/styling.md
-  mkMnemonic = s: {
+  mkMnemonic = baseSlots: {
     # Backgrounds
-    black = s.base00;
-    darkestGray = s.base01;
-    darkGray = s.base02;
-    gray = s.base03;
+    black = baseSlots.base00;
+    darkestGray = baseSlots.base01;
+    darkGray = baseSlots.base02;
+    gray = baseSlots.base03;
 
     # Foregrounds
-    lightGray = s.base04;
-    white = s.base05;
-    lighterWhite = s.base06;
-    brightWhite = s.base07;
+    lightGray = baseSlots.base04;
+    white = baseSlots.base05;
+    lighterWhite = baseSlots.base06;
+    brightWhite = baseSlots.base07;
 
     # Accents
-    red = s.base08;
-    orange = s.base09;
-    yellow = s.base0A;
-    green = s.base0B;
-    cyan = s.base0C;
-    blue = s.base0D;
-    magenta = s.base0E;
-    brown = s.base0F;
+    red = baseSlots.base08;
+    orange = baseSlots.base09;
+    yellow = baseSlots.base0A;
+    green = baseSlots.base0B;
+    cyan = baseSlots.base0C;
+    blue = baseSlots.base0D;
+    magenta = baseSlots.base0E;
+    brown = baseSlots.base0F;
 
     # Base24 extension slots
-    darkerBlack = s.base10;
-    darkestBlack = s.base11;
-    brightRed = s.base12;
-    brightYellow = s.base13;
-    brightGreen = s.base14;
-    brightCyan = s.base15;
-    brightBlue = s.base16;
-    brightMagenta = s.base17;
+    darkerBlack = baseSlots.base10;
+    darkestBlack = baseSlots.base11;
+    brightRed = baseSlots.base12;
+    brightYellow = baseSlots.base13;
+    brightGreen = baseSlots.base14;
+    brightCyan = baseSlots.base15;
+    brightBlue = baseSlots.base16;
+    brightMagenta = baseSlots.base17;
   };
 }

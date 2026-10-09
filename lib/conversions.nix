@@ -32,23 +32,22 @@
     b = toString (hexByteToInt (substring 4 2 hex));
   in "rgb(${r}, ${g}, ${b})";
 
-  # TODO: Naming
   # https://github.com/tinted-theming/base24/blob/master/styling.md
-  base16ToBase24 = s:
-    s
+  toBase24 = base16:
+    base16
     // {
-      base10 = s.base00;
-      base11 = s.base00;
-      base12 = s.base08;
-      base13 = s.base0A;
-      base14 = s.base0B;
-      base15 = s.base0C;
-      base16 = s.base0D;
-      base17 = s.base0E;
+      base10 = base16.base00;
+      base11 = base16.base00;
+      base12 = base16.base08;
+      base13 = base16.base0A;
+      base14 = base16.base0B;
+      base15 = base16.base0C;
+      base16 = base16.base0D;
+      base17 = base16.base0E;
     };
 in {
-  inherit base16ToBase24;
-  # TODO: Naming
+  inherit toBase24;
+  # NAMING: What's `colors:`? Too vague.
   toHex = colors: mapAttrs (_: v: "#" + v) colors;
   toRgb = colors: mapAttrs (_: v: hexToRgb v) colors;
 }

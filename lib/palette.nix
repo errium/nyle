@@ -10,7 +10,6 @@
     rgb = conversions.toRgb raw;
   };
 in {
-  # schemeNormalized: variant + base00..base17 (already resolved to base24 form)
   mkPalette = schemeNormalized: let
     mnemonicRaw = mkMnemonic schemeNormalized;
     semanticRaw = mkSemantic mnemonicRaw;

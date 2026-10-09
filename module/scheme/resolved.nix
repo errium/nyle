@@ -31,12 +31,12 @@
     base17 = mkOption {type = hexType;};
   };
 
-  _schemeNormalizedType = nullOr (submodule {
+  _schemeResolvedType = nullOr (submodule {
     options = slotOptions // {variant = mkOption {type = enum ["light" "dark"];};};
   });
 in {
-  options.nyle._schemeNormalized = mkOption {
-    type = _schemeNormalizedType;
+  options.nyle._schemeResolved = mkOption {
+    type = _schemeResolvedType;
     default = null;
     description = "WIP"; # TODO
     internal = true;
