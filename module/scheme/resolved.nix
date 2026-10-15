@@ -1,44 +1,14 @@
-{lib, ...}: let
-  inherit (lib) mkOption;
-  inherit (lib.types) enum nullOr strMatching submodule;
+/*
+Internal meeting point between scheme inputs and output.
 
-  hexType = strMatching "^[0-9A-Fa-f]{6}$";
-
-  slotOptions = {
-    base00 = mkOption {type = hexType;};
-    base01 = mkOption {type = hexType;};
-    base02 = mkOption {type = hexType;};
-    base03 = mkOption {type = hexType;};
-    base04 = mkOption {type = hexType;};
-    base05 = mkOption {type = hexType;};
-    base06 = mkOption {type = hexType;};
-    base07 = mkOption {type = hexType;};
-    base08 = mkOption {type = hexType;};
-    base09 = mkOption {type = hexType;};
-    base0A = mkOption {type = hexType;};
-    base0B = mkOption {type = hexType;};
-    base0C = mkOption {type = hexType;};
-    base0D = mkOption {type = hexType;};
-    base0E = mkOption {type = hexType;};
-    base0F = mkOption {type = hexType;};
-    base10 = mkOption {type = hexType;};
-    base11 = mkOption {type = hexType;};
-    base12 = mkOption {type = hexType;};
-    base13 = mkOption {type = hexType;};
-    base14 = mkOption {type = hexType;};
-    base15 = mkOption {type = hexType;};
-    base16 = mkOption {type = hexType;};
-    base17 = mkOption {type = hexType;};
-  };
-
-  _schemeResolvedType = nullOr (submodule {
-    options = slotOptions // {variant = mkOption {type = enum ["light" "dark"];};};
-  });
-in {
-  options.nyle._schemeResolved = mkOption {
-    type = _schemeResolvedType;
+Each input writes its result here as variant + base00..base17.
+Values are not re-validated: the inputs' own option types should check them.
+*/
+{lib, ...}: {
+  options.nyle.resolved = lib.mkOption {
+    type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
     default = null;
-    description = "WIP"; # TODO
+    description = "Chosen scheme in base24 form (variant + base00..base17).";
     internal = true;
     visible = false;
   };

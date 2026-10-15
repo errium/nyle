@@ -1,28 +1,21 @@
-# TODO: Rewrite
 {
   config,
   lib,
   ...
 }: let
-  cfg = config.nyle;
-
-  inputCount =
-    (
-      if cfg.scheme.base16 != null
-      then 1
-      else 0
-    )
-    + (
-      if cfg.scheme.base24 != null
-      then 1
-      else 0
-    );
+  inherit (config) nyle;
+  sources = lib.attrNames nyle.scheme;
+  set = lib.filter (name: nyle.scheme.${name} != null) sources;
 in {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf nyle.enable {
     assertions = [
       {
-        assertion = inputCount == 1;
-        message = "nyle: exactly one of nyle.scheme.base16, nyle.scheme.base24 must be set (got ${toString inputCount}).";
+        assertion = lib.length set == 1;
+        message = "nyle: set exactly one scheme source; got: ${
+          if set == []
+          then "none"
+          else lib.concatStringsSep ", " set
+        }.";
       }
     ];
   };

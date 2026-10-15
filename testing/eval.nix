@@ -27,7 +27,7 @@
     base0F = "cc6633";
   };
 
-  # Evaluate nyle with all targets enabled.
+  # Evaluate nyle with all targets enabled
   evaluation = lib.evalModules {
     class = "hjem";
     specialArgs = {inherit hjemLib pkgs;};
@@ -47,7 +47,7 @@
     ];
   };
 in {
-  # Force evaluation.
+  # Force evaluation
   check = pkgs.runCommand "nyle-eval" {} ''
     echo ${toString (builtins.deepSeq evaluation.config.lib.nyle true)} > $out
   '';

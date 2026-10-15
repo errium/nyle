@@ -3,13 +3,11 @@
   lib,
   ...
 }: let
+  inherit (config) nyle;
+  inherit (import ../../lib/conversions.nix {inherit lib;}) toBase24;
   inherit (lib) mkIf mkOption types;
-  cfg = config.nyle;
-  conversions = import ../../lib/conversions.nix {inherit lib;};
 
   hex = types.strMatching "^[0-9A-Fa-f]{6}$";
-  hasBase16 = cfg.scheme.base16 != null;
-  hasBase24 = cfg.scheme.base24 != null;
 
   base16Options = {
     variant = mkOption {type = types.enum ["light" "dark"];};
@@ -58,11 +56,11 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && (hasBase16 || hasBase24)) {
-    # NOTE: `_schemeResolved` is declared in resolved.nix
-    nyle._schemeResolved =
-      if hasBase24
-      then cfg.scheme.base24
-      else conversions.base16ToBase24 cfg.scheme.base16;
-  };
+  # Input-specific step: turn whichever scheme input the user set into `nyle.resolved` (base24 form).
+  # If several inputs are set, base24 wins silently; the assertion in assertions.nix reports it.
+  config.nyle.resolved = mkIf (nyle.enable && (nyle.scheme.base24 != null || nyle.scheme.base16 != null)) (
+    if nyle.scheme.base24 != null
+    then nyle.scheme.base24
+    else toBase24 nyle.scheme.base16
+  );
 }

@@ -3,36 +3,28 @@
   lib,
   ...
 }: let
-  inherit (lib) mapAttrs mkOption types;
-  cfg = config.nyle;
+  inherit (config) nyle;
+  inherit (lib) mkOption types;
 
-  targetOptions = {
+  targetOptions.options = {
     enable = mkOption {
       type = types.bool;
-      default = cfg.enable && cfg.mode == "all";
-      description = "WIP";
+      default = nyle.enable && nyle.mode == "all";
+      description = ''
+        Whether this target is enabled.
+        Defaults to `true` when `nyle.mode` is set to `all`.
+      '';
     };
 
     template = mkOption {
-      type = types.functionTo types.str;
+      type = types.str;
       internal = true;
       visible = false;
     };
   };
 in {
   options.nyle.targets = mkOption {
-    type = types.attrsOf (types.submodule {options = targetOptions;});
+    type = types.attrsOf (types.submodule targetOptions);
     default = {};
   };
-
-  config.lib.nyle.generated =
-    mapAttrs (
-      name: target:
-        if !cfg.enable
-        then throw "nyle: nyle.enable is false."
-        else if cfg.mode == "manual" && !target.enable
-        then throw ''nyle: "${name}" target is not enabled.''
-        else target.template config.lib.nyle
-    )
-    cfg.targets;
 }

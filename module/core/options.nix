@@ -6,11 +6,10 @@
       type = lib.types.enum ["all" "lazy" "manual"];
       default = "manual";
       description = ''
-        Determines how targets are activated:
-
-        - all: all targets are enabled.
-        - lazy: targets are activated on first use.
-        - manual: targets must be enabled explicitly.
+        How targets become active.
+        - `all`: every imported target is active.
+        - `lazy`: a target is active as soon as its output is referenced.
+        - `manual`: a target is active only if `nyle.targets.<name>.enable` is set.
       '';
     };
   };
