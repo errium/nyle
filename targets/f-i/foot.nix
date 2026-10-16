@@ -1,8 +1,8 @@
 {config, ...}: {
   config.nyle.targets.foot.template = with config.lib.nyle.mnemonic.raw; ''
     [colors-${config.lib.nyle.variant}]
-    foreground=${white}
     background=${black}
+    foreground=${white}
 
     regular0=${black}
     regular1=${red}

@@ -3,22 +3,22 @@
   inherit (lib) mapAttrs toLower;
 
   hexDigits = {
-    "0" = 0; ## I
-    "1" = 1; ## hate
-    "2" = 2; ## all
-    "3" = 3; ## nix
-    "4" = 4; ## formatters
-    "5" = 5; ## because
-    "6" = 6; ## they
-    "7" = 7; ## don't
-    "8" = 8; ## let
-    "9" = 9; ## me
-    "a" = 10; # inline
-    "b" = 11; # simple
-    "c" = 12; # stuff
-    "d" = 13; # like
-    "e" = 14; # this
-    "f" = 15; # >:(
+    "0" = 0;
+    "1" = 1;
+    "2" = 2;
+    "3" = 3;
+    "4" = 4;
+    "5" = 5;
+    "6" = 6;
+    "7" = 7;
+    "8" = 8;
+    "9" = 9;
+    a = 10;
+    b = 11;
+    c = 12;
+    d = 13;
+    e = 14;
+    f = 15;
   };
 
   hexByteToInt = byte:
