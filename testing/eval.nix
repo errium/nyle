@@ -19,13 +19,13 @@ Targets are discovered, so adding one needs no edits here.
     class = "hjem";
     specialArgs = {inherit hjem-lib pkgs;};
     modules = [
-      ./default.nix
       (hjem + "/modules/common/user.nix")
       {
         _module.args.name = "test";
         user = "test";
         directory = "/home/test";
       }
+      ./default.nix
       self.hjemModules.nyle
       ({config, ...}: {
         nyle.enable = true;

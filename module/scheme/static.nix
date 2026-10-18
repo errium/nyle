@@ -7,39 +7,39 @@
   inherit (import ../../lib/conversions.nix {inherit lib;}) toBase24;
   inherit (lib) mkIf mkOption types;
 
-  hex = types.strMatching "^[0-9A-Fa-f]{6}$";
+  raw = types.strMatching "^[0-9A-Fa-f]{6}$";
 
   base16Options = {
     variant = mkOption {type = types.enum ["light" "dark"];};
-    base00 = mkOption {type = hex;};
-    base01 = mkOption {type = hex;};
-    base02 = mkOption {type = hex;};
-    base03 = mkOption {type = hex;};
-    base04 = mkOption {type = hex;};
-    base05 = mkOption {type = hex;};
-    base06 = mkOption {type = hex;};
-    base07 = mkOption {type = hex;};
-    base08 = mkOption {type = hex;};
-    base09 = mkOption {type = hex;};
-    base0A = mkOption {type = hex;};
-    base0B = mkOption {type = hex;};
-    base0C = mkOption {type = hex;};
-    base0D = mkOption {type = hex;};
-    base0E = mkOption {type = hex;};
-    base0F = mkOption {type = hex;};
+    base00 = mkOption {type = raw;};
+    base01 = mkOption {type = raw;};
+    base02 = mkOption {type = raw;};
+    base03 = mkOption {type = raw;};
+    base04 = mkOption {type = raw;};
+    base05 = mkOption {type = raw;};
+    base06 = mkOption {type = raw;};
+    base07 = mkOption {type = raw;};
+    base08 = mkOption {type = raw;};
+    base09 = mkOption {type = raw;};
+    base0A = mkOption {type = raw;};
+    base0B = mkOption {type = raw;};
+    base0C = mkOption {type = raw;};
+    base0D = mkOption {type = raw;};
+    base0E = mkOption {type = raw;};
+    base0F = mkOption {type = raw;};
   };
 
   base24Options =
     base16Options
     // {
-      base10 = mkOption {type = hex;};
-      base11 = mkOption {type = hex;};
-      base12 = mkOption {type = hex;};
-      base13 = mkOption {type = hex;};
-      base14 = mkOption {type = hex;};
-      base15 = mkOption {type = hex;};
-      base16 = mkOption {type = hex;};
-      base17 = mkOption {type = hex;};
+      base10 = mkOption {type = raw;};
+      base11 = mkOption {type = raw;};
+      base12 = mkOption {type = raw;};
+      base13 = mkOption {type = raw;};
+      base14 = mkOption {type = raw;};
+      base15 = mkOption {type = raw;};
+      base16 = mkOption {type = raw;};
+      base17 = mkOption {type = raw;};
     };
 in {
   options.nyle.scheme = {
@@ -56,9 +56,9 @@ in {
     };
   };
 
-  # Input-specific step: turn whichever scheme input the user set into `nyle.resolved` (base24 form).
+  # Input-specific step: turn whichever scheme input the user set into `internal.resolved` (base24 form).
   # If several inputs are set, base24 wins silently; the assertion in assertions.nix reports it.
-  config.nyle.resolved = mkIf (nyle.enable && (nyle.scheme.base24 != null || nyle.scheme.base16 != null)) (
+  config.internal.resolved = mkIf (nyle.enable && (nyle.scheme.base24 != null || nyle.scheme.base16 != null)) (
     if nyle.scheme.base24 != null
     then nyle.scheme.base24
     else toBase24 nyle.scheme.base16

@@ -1,16 +1,4 @@
-/*
-Internal test data, freeform: anything can be put under `internal.testing`.
-Lives outside module/, so nyle itself never imports it.
-*/
-{lib, ...}: {
-  options.internal.testing = lib.mkOption {
-    type = lib.types.attrsOf lib.types.anything;
-    default = {};
-    description = "Internal test data.";
-    internal = true;
-    visible = false;
-  };
-
+{
   config.internal.testing = {
     # https://github.com/tinted-theming/schemes/blob/spec-0.11/base16/ayu-dark.yaml
     base16Dark = {

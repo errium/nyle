@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config) nyle;
+  inherit (config) internal nyle;
   inherit (import ../../lib/mk-palette.nix {inherit lib;}) mkPalette;
   inherit (lib) mapAttrs mkIf mkMerge mkOption types;
 in {
@@ -15,7 +15,7 @@ in {
 
   config.lib.nyle = mkMerge [
     # Palette: variant, base, mnemonic, semantic. Absent until a scheme is resolved.
-    (mkIf (nyle.resolved != null) (mkPalette nyle.resolved))
+    (mkIf (internal.resolved != null) (mkPalette internal.resolved))
 
     # Rendered config string per target, keyed by target name.
     # Fails with a readable error if nyle or the target is not enabled.
