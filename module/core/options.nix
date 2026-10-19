@@ -7,6 +7,7 @@
       default = "manual";
       description = ''
         How targets become active.
+
         - `all`: every imported target is active.
         - `lazy`: a target is active as soon as its output is referenced.
         - `manual`: a target is active only if `nyle.targets.<name>.enable` is set.
