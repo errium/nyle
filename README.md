@@ -16,4 +16,4 @@
 > All ideas are welcome, though.
 
 > [!NOTE]
-> **This message will disappear once nyle is in a working state.**
+> **This message will disappear once `nyle` is in a working state.**
