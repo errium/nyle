@@ -53,8 +53,9 @@ Targets are discovered, so adding one needs no edits here.
       (palette.base.raw.base17 == scheme.base0E)
     ];
 
+    hex = palette.base.hex.base00 == "#${scheme.base00}";
+
     # WARN: Hardcode.
-    hex = palette.base.hex.base00 == "#0b0e14";
     rgb = palette.base.rgb.base00 == "rgb(11, 14, 20)";
 
     mnemonic = lib.all (ok: ok) [
